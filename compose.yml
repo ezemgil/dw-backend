@@ -1,0 +1,18 @@
+services:
+  postgres:
+    image: postgres:17.5
+    container_name: postgres
+    environment:
+      - 'POSTGRES_DB=dw'
+      - 'POSTGRES_USER=pg'
+      - 'POSTGRES_PASSWORD=pg'
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./wortliste.csv:/docker/wortliste.csv
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pg -d dw"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
