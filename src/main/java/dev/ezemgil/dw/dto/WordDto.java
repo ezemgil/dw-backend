@@ -10,25 +10,33 @@ import lombok.experimental.FieldDefaults;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class WordDto {
+    Integer id;
     String word;
-    String gender;
-    String wordType;
-    String hint;
-    String category;
-    int menschenUnit;
-    String imageQuery;
-    String audioQuery;
+    GenderDto gender;
+    String plural;
+    String notes;
+    CategoryDto category;
+    WordTypeDto wordType;
+    String imageUrl;
+    String audioUrl;
+    String cefrLevel;
 
     public static WordDto from(Word word) {
+        if (word == null) {
+            return null;
+        }
+
         return WordDto.builder()
+                .id(word.getId())
                 .word(word.getWord())
-                .gender(word.getGender())
-                .wordType(word.getWordType())
-                .hint(word.getHint())
-                .category(word.getCategory())
-                .menschenUnit(word.getMenschenUnit())
-                .imageQuery(word.getImageQuery())
-                .audioQuery(word.getAudioQuery())
+                .gender(GenderDto.from(word.getGender()))
+                .plural(word.getPlural())
+                .notes(word.getNotes())
+                .category(CategoryDto.from(word.getCategory()))
+                .wordType(WordTypeDto.from(word.getWordType()))
+                .imageUrl(word.getImageUrl())
+                .audioUrl(word.getAudioUrl())
+                .cefrLevel(word.getCerfLevel())
                 .build();
     }
 }

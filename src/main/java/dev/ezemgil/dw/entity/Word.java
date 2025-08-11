@@ -21,18 +21,30 @@ public class Word {
     @Column(nullable = false)
     String word;
 
-    String gender;
+    @ManyToOne
+    Gender gender;
+
     String plural;
-    String wordType;
-    String hint;
-    String category;
-    String cerfLevel;
-    int menschenUnit;
-    String imageQuery;
-    String audioQuery;
+
+    String notes;
+
+    @ManyToOne
+    Category category;
+
+    @ManyToOne
+    WordType wordType;
+
+    String imageUrl;
+    String audioUrl;
 
     @Column(nullable = false)
     boolean isActive;
+
+    @Column(nullable = false)
     LocalDateTime createdAt;
+
+    @Column(nullable = false)
     LocalDateTime updatedAt;
+
+    String cerfLevel;
 }

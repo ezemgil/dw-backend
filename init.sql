@@ -153,3 +153,15 @@ CREATE INDEX idx_words_gender_id ON words (gender_id);
 CREATE INDEX idx_words_category_id ON words (category_id);
 CREATE INDEX idx_words_type_id ON words (type_id);
 CREATE INDEX idx_words_active ON words (is_active) WHERE is_active = TRUE;
+
+DROP TABLE IF EXISTS staging_words;
+
+UPDATE categories c
+SET words_amount = sub.count
+FROM (
+    SELECT category_id, COUNT(*) AS count
+    FROM words
+    GROUP BY category_id
+) sub
+WHERE c.id = sub.category_id;
+
